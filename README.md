@@ -12,6 +12,6 @@ var fun = function lang(l) {
 }
 ```
 ## 复选框
--[x] bear form
--[x] cat form
--[ ] fish form
+- [x] bear form
+- [x] cat form
+- [ ] fish form
