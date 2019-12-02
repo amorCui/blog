@@ -1,4 +1,4 @@
-blog
+#blog
 ## 表格
 |左对齐|居中对齐|右对齐|
 |:--------|:---------:|---------:|
@@ -11,3 +11,7 @@ var fun = function lang(l) {
   return true;
 }
 ```
+## 复选框
+-[x] bear form
+-[x] cat form
+-[ ] fish form
