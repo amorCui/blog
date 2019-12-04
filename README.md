@@ -15,3 +15,6 @@ var fun = function lang(l) {
 - [x] bear form
 - [x] cat form
 - [ ] fish form
+
+
+[https://github.com/guodongxiaren/README/edit/master/README.md](参考)
