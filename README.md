@@ -17,4 +17,4 @@ var fun = function lang(l) {
 - [ ] fish form
 
 
-[https://github.com/guodongxiaren/README/edit/master/README.md](参考)
+[参考](https://github.com/guodongxiaren/README/edit/master/README.md)
