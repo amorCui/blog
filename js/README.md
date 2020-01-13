@@ -1,1 +1,1 @@
-1.[Promise]('./promise')
+1.[Promise](promise)
