@@ -1,5 +1,5 @@
 # Promise  学习
-> [文档地址] (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) <br/>
+> [文档地址](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) <br/>
 > Promise函数用来反应异步方法最终执行完成之后（成功/失败），以及结果值。<br/>
 > `Promise`方法的参数是一个函数 `function(resolve, reject){}`, 这个函数具有两个参数`resolve`和`reject`。<br/>
 > 其中`resolve`方法是在整个`Promise`执行完成并且获取成功之后执行的内容，传递给`resolve`的参数最终将会在`Promise.then(onFulfilled[, onRejected])`的`onFulfilled`函数中找到。<br/>
