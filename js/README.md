@@ -1,2 +1,3 @@
 *JS 分类列表<br/>
 1.[Promise](promise)<br/>
+2.[js 中文排序](sort)<br/>
