@@ -1,5 +1,6 @@
+<h1>创建Ref<h1>
 
-```
+``` javascript
 class CustomTextInput extends React.Component {
   constructor(props) {
     super(props);
