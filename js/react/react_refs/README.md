@@ -72,11 +72,13 @@ class CustomTextInput extends React.Component {
 <h3>为 class 组件添加 Ref</h3>
 如果我们想包装上面的 CustomTextInput，来模拟它挂载之后立即被点击的操作，我们可以使用 ref 来获取这个自定义的 input 组件并手动调用它的 focusTextInput 方法：
 这仅在 CustomTextInput 声明为 class 时才有效：
+
 ```
 class CustomTextInput extends React.Component {
   // ...
 }
 ```
+
 ```
 class AutoFocusTextInput extends React.Component {
   constructor(props) {
@@ -95,8 +97,9 @@ class AutoFocusTextInput extends React.Component {
   }
 }
 ```
+
 <h3>Refs 与函数组件</h3>
-默认情况下，<p style="color:red">你不能在函数组件上使用 ref 属性</p>，因为它们没有实例：
+默认情况下，<b>你不能在函数组件上使用 ref 属性</b>，因为它们没有实例：
 
 ```
 function MyFunctionComponent() {
