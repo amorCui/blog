@@ -22,6 +22,7 @@ class MyComponent extends React.Component {
 ```
 const node = this.myRef.current;
 ```
+
 ref 的值根据节点的类型而有所不同：
 
 当 ref 属性用于 HTML 元素时，构造函数中使用 React.createRef() 创建的 ref 接收底层 DOM 元素作为其 current 属性。
@@ -30,6 +31,7 @@ ref 的值根据节点的类型而有所不同：
 
 <h3>为 DOM 元素添加 ref</h3>
 React 会在组件挂载时给 current 属性传入 DOM 元素，并在组件卸载时传入 null 值。ref 会在 componentDidMount 或 componentDidUpdate 生命周期钩子触发前更新。
+
 ``` javascript
 class CustomTextInput extends React.Component {
   constructor(props) {
