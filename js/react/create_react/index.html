@@ -1,0 +1,732 @@
+<html>
+    <body>
+        <div>转自 ：https://segmentfault.com/a/1190000016342792</div>
+        <div class="col-xl w-0 col-12">
+            <canvas hidden="" class="qrcode" height="116" width="116" style="height: 116px; width: 116px"> </canvas>
+            <div class="mb-4 card">
+                <div class="p-lg-30 position-relative card-body">
+                    <h1 class="h2 mb-3">
+                        <a href="/a/1190000016342792" class="text-body">react 项目构建</a>
+                    </h1>
+                    <div id="OA_holder_25" class="ad-container" style="display: block">
+                        <div id="beacon_5ee10155a1" style="position: absolute; left: 0px; top: 0px; visibility: hidden">
+                            <img src="https://sponsor.segmentfault.com/lg.php?bannerid=0&amp;campaignid=0&amp;zoneid=25&amp;loc=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000016342792&amp;referer=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3D9BZjHN-UWToD8rVk2SMW7O9R-mfpE0WoHdFyp-Nb5QPjL-1QIDDmzrtQxsUiFC3UKjRds3roldm1_X7soVb3eK%26wd%3D%26eqid%3D8b2aa3d80012867700000004629ba2b1&amp;cb=5ee10155a1" width="0" height="0" alt="" style="width: 0px; height: 0px" />
+                        </div>
+                    </div>
+                    <article class="article fmt article-content">
+                        <h2 id="item-1">写在前面</h2>
+                        <p>每次构建react项目的时候都会配置一大堆东西，时间久了就会忘记怎么配置。为了方便自己记忆也为了其他开发者在构建react应用时能够快速开发，故作此记录。</p>
+                        <blockquote>本项目基于 <code>create-react-app</code> 脚手架进行配置。主要配置了一些项目开发中常用的方法，比如 webpack的 <code>sass</code>，<code>redux</code>、<code>热加载</code>、<code>代理</code>以及其他工具库的引入等等。</blockquote>
+                        <h2 id="item-2">初始化项目</h2>
+                        <p>首先，要先利用create-react-app创建一个react项目，可参考 <a href="https://link.segmentfault.com/?enc=dL%2FdEbqfrWIYpZhAkdG33w%3D%3D.nzTapCoVGa8mNuXnatGDV6orIMrbXzpOVQ11LXQgEgp5fQGpMSyb9tpfx08KAlYxtdKJSbEQ1QiRNmeTiTwT6Q%3D%3D" rel="nofollow" target="_blank">https://github.com/facebookin...</a></p>
+                        <p>安装 <code>create-react-app</code></p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="npm install -g create-react-app" title="" data-bs-original-title="复制" aria-label="复制"></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-cmake">npm <span class="hljs-keyword">install</span> -g create-react-app</pre>
+                        <p>创建一个应用程序</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="create-react-app my-app
+    cd my-app"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-dsconfig">
+    <span class="hljs-built_in">create-react-app</span>
+    <span class="hljs-string">my-app</span>
+    <span class="hljs-string">cd</span>
+    <span class="hljs-string">my-app</span>
+    </pre>
+                        <p>
+                            <strong>注：my-app是指项目的名称，用户可以自定义项目名称</strong>
+                        </p>
+                        <p>这个时候可以在命令行输入</p>
+                        <p><code>npm start</code> : 启动项目就能看到项目启动页面了。</p>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJh5?w=1400&amp;h=298" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJh5?w=1400&amp;h=298" />
+                            </span>
+                        </p>
+                        <p><code>npm run build</code> : 项目发布。</p>
+                        <p>这样一个简单的react项目就初始化完毕了。</p>
+                        <p>但是，默认所有配置是隐藏起来的，要想自定义配置，需要运行一个命令：<code>npm run eject</code> <br />此时会提示，该命令不可逆，是否继续，输入y，这样所有配置项就都出来了。会生成一个<code>config</code>文件夹，这时候也可以做一些定制化的配置了。</p>
+                        <h2 id="item-3">项目配置</h2>
+                        <h3 id="item-3-1">兼容IE</h3>
+                        <p>引入<code>element-react</code> UI框架会报错 <code>ReferenceError: “Symbol”未定义</code></p>
+                        <ul>
+                            <li>解决方案：</li>
+                        </ul>
+                        <p>项目中引入<code>babel-polyfill</code>,在app.js中导入即可</p>
+                        <h3 id="item-3-2">配置webpack</h3>
+                        <p>基于webpack的一些配置</p>
+                        <h5>配置sass</h5>
+                        <p>脚手架默认没有配置sass，项目中如果使用sass需要单独配置</p>
+                        <p>1、安装依赖 <code>npm install --save-d node-sass sass-loader</code> <br />2、修改config下面的<code>webpack.config.dev.js</code>和<code>webpack.config.prod.js</code>,都需要修改,开发环境和发布环境是单独的配置。</p>
+                        <p>修改cssloader<br />将<code>test: /\.css$/,</code> 修改为： <code> test: /\.(css|scss|sass)$/,</code>即识别scss/sass文件</p>
+                        <p>
+                            最后添加<br />
+                            <code>sass-loader</code>
+                        </p>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJpP?w=1036&amp;h=522" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJpP?w=1036&amp;h=522" />
+                            </span>
+                        </p>
+                        <h5>配置别名</h5>
+                        <p>别名在项目中方便我们快速引入文件。比如我们项目中有一个公共文件目录为src/util/tools，例如有以下文件结构</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="├── src                                   
+    │&nbsp;&nbsp; ├── assets                            # 项目资源
+    │&nbsp;&nbsp; │   └── ...
+    │&nbsp;&nbsp; ├── containers                        # 页面容器
+    │&nbsp;&nbsp; │   └── pages
+    │&nbsp;&nbsp; │       └── pageA                     # 页面A     
+    │&nbsp;&nbsp; │           └───a.js                  # a.js           
+    │&nbsp;&nbsp; │── utils                             # 其他工具类
+    │&nbsp;&nbsp; │   └── tools
+    │&nbsp;&nbsp; ├── index.js                          # webpack打包入口文件
+    "
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-mipsasm">├── src                                   
+    │&nbsp;&nbsp; ├── assets                            <span class="hljs-comment"># 项目资源</span>
+    │&nbsp;&nbsp; │   └── ...
+    │&nbsp;&nbsp; ├── containers                        <span class="hljs-comment"># 页面容器</span>
+    │&nbsp;&nbsp; │   └── pages
+    │&nbsp;&nbsp; │       └── pageA                     <span class="hljs-comment"># 页面A     </span>
+    │&nbsp;&nbsp; │           └───a.<span class="hljs-keyword">js </span>                 <span class="hljs-comment"># a.js           </span>
+    │&nbsp;&nbsp; │── utils                             <span class="hljs-comment"># 其他工具类</span>
+    │&nbsp;&nbsp; │   └── tools
+    │&nbsp;&nbsp; ├── index.<span class="hljs-keyword">js </span>                         <span class="hljs-comment"># webpack打包入口文件</span>
+    </pre>
+                        <p>在层级很深的组件内部<code>a.js</code>需要引入<code>tools</code>文件，我们会使用<code>../../../util/tools</code>去找到文件的相对位置，但是在使用webpack配置的别名后可以直接定位到<code>/src</code>目录下。</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="// 未使用别名
+    import tools from '../../../util/tools';
+    
+    // 使用别名后
+    import tools from '@/util/tools';  // '@/' 指向 'src/'"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-awk">
+    <span class="hljs-regexp">//</span> 未使用别名
+    import tools from <span class="hljs-string">'../../../util/tools'</span>;
+    
+    <span class="hljs-regexp">//</span> 使用别名后
+    import tools from <span class="hljs-string">'@/util/tools'</span>;  <span class="hljs-regexp">//</span>
+    <span class="hljs-string">'@/'</span> 指向 <span class="hljs-string">'src/'</span>
+    </pre>
+                        <p>配置方式</p>
+                        <p>dev和prod环境都需要配置</p>
+                        <p>在resolve/alias进行配置</p>
+                        <p>其中 <code>resolve</code> 是一个自定义函数。</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="function resolve(dir) {
+        return path.join(__dirname, '..', dir)
+    }"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-ada">
+    <span class="hljs-keyword">function</span>
+    <span class="hljs-title">resolve</span>(dir) {
+        <span class="hljs-keyword">return</span>
+    <span class="hljs-type">path.join(__dirname,</span> '..', dir)
+    }</pre>
+                        <p>也可以写成</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="'@': path.join(__dirname, '..', 'src')" title="" data-bs-original-title="复制" aria-label="复制"></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-pgsql">
+    <span class="hljs-string">'@'</span>: <span class="hljs-type">path</span>.<span class="hljs-keyword">join</span>(__dirname, <span class="hljs-string">'..'</span>, <span class="hljs-string">'src'</span>)</pre>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJth?w=1048&amp;h=608" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJth?w=1048&amp;h=608" />
+                            </span>
+                        </p>
+                        <h3 id="item-3-3">配置热加载</h3>
+                        <p><code>create-react-app</code>项目中配置的有热加载，我们只需要在项目入口文件<code>index.js</code>中启用热加载就行，直接在末尾添加</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="// index.js
+    /* 热加载 */
+    if (module.hot) {
+      module.hot.accept();
+    }"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-arduino">
+    <span class="hljs-comment">// index.js</span>
+    <span class="hljs-comment">/* 热加载 */</span>
+    <span class="hljs-keyword">if</span> (<span class="hljs-keyword">module</span>.hot) {
+      <span class="hljs-keyword">module</span>.hot.<span class="hljs-built_in">accept</span>();
+    }</pre>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJxI?w=658&amp;h=312" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJxI?w=658&amp;h=312" />
+                            </span>
+                        </p>
+                        <h3 id="item-3-4">配置代理服务器</h3>
+                        <p>在前端开发中请求接口经常会遇到跨域的问题，处理跨域的方式有很多，多数webpack是配置dev_server，但这种方法在create-react-app 生成的应用中无效，对于这种应用应在package.json处进行代理</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text='// package.json
+    "proxy": "http://api.enjoycut.com/"
+    
+    // 或者
+    "proxy": {
+        "/article": {
+          "target": "http://api.enjoycut.com/",
+          "changeOrigin": true,
+          "secure": false
+        }
+      }
+    // 下面的方式没有配置过'
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-awk">
+    <span class="hljs-regexp">//</span> package.json
+    <span class="hljs-string">"proxy"</span>: <span class="hljs-string">"http://api.enjoycut.com/"</span>
+    
+    <span class="hljs-regexp">//</span> 或者
+    <span class="hljs-string">"proxy"</span>: {
+        <span class="hljs-string">"/article"</span>: {
+          <span class="hljs-string">"target"</span>: <span class="hljs-string">"http://api.enjoycut.com/"</span>,
+          <span class="hljs-string">"changeOrigin"</span>: true,
+          <span class="hljs-string">"secure"</span>: false
+        }
+      }
+    <span class="hljs-regexp">//</span> 下面的方式没有配置过</pre>
+                        <h3 id="item-3-5">配置路由</h3>
+                        <p>react-router4的使用方式和以前的router版本使用方式不同</p>
+                        <p>
+                            <a href="https://link.segmentfault.com/?enc=j5n%2Brp6B925uGxL9M0oS0Q%3D%3D.iByjonM1puAxUEx3GkBDDi6e%2F%2Fk60Ah6TqD%2FivuDIens4leqT5KVSYpur2qwZ%2FErdAoRpvZW34Kp9GAwPZsITg%3D%3D" rel="nofollow" target="_blank">react-router4文档地址</a>
+                        </p>
+                        <h3 id="item-3-6">配置redux</h3>
+                        <h5>配置 <code>@connect</code>装饰器</h5>
+                        <p>在项目中可以直接通过@connect方式访问redux</p>
+                        <p>
+                            未配置<br />
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJD7?w=856&amp;h=262" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJD7?w=856&amp;h=262" />
+                            </span>
+                        </p>
+                        <p>配置后</p>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJEm?w=935&amp;h=210" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJEm?w=935&amp;h=210" />
+                            </span>
+                        </p>
+                        <p>需要说明的是，这里用了装饰器，需要安装模块<code>babel-plugin-transform-decorators-legacy</code></p>
+                        <p>然后在package.json里面配置<code>plugins</code></p>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJE6?w=926&amp;h=763" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJE6?w=926&amp;h=763" />
+                            </span>
+                        </p>
+                        <h3 id="item-3-7">项目中其他工具配置</h3>
+                        <h4>
+                            <code>classnames</code>
+                        </h4>
+                        <p>在react 中切换className比较麻烦，简单的可以使用三目运算，但是复杂一点的class就比较麻烦了，比如这个稍微复杂点的div动态切换多个className, 推荐一个工具库，可以简单方便的切换className.</p>
+                        <p>
+                            <a href="https://link.segmentfault.com/?enc=XpxqnBxv6qTWEQ26mpfqCQ%3D%3D.LWIU4bOTZ%2F2YO1qWUxRM9MPNTnj6kwDQVHWtbvALif62SHxvvq%2ByNDYBEPNkrYTU" rel="nofollow" target="_blank">clsssnames使用文档</a>
+                        </p>
+                        <p>
+                            <span class="img-wrap">
+                                <img class="lazy entered loaded exited" referrerpolicy="no-referrer" data-src="/img/bVbgJBo?w=1265&amp;h=206" alt="图片描述" title="图片描述" data-ll-status="loaded" src="/img/bVbgJBo?w=1265&amp;h=206" />
+                            </span>
+                        </p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="      <div className={classNames('clip_item', {
+          'clip_active': isActive, 
+          'effect_hover': activeDrag === 'video_inner',
+           'dragging': is_dragging}
+           )}>
+          // 默认classNAme： 'clip_item'
+          // isActive    === true 则添加className 'clip_active'
+          // is_dragging === true 则添加className 'dragging'"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-awk">      &lt;div className={classNames(<span class="hljs-string">'clip_item'</span>, {
+          <span class="hljs-string">'clip_active'</span>: isActive, 
+          <span class="hljs-string">'effect_hover'</span>: activeDrag === <span class="hljs-string">'video_inner'</span>,
+           <span class="hljs-string">'dragging'</span>: is_dragging}
+           )}&gt;
+          <span class="hljs-regexp">//</span> 默认classNAme： <span class="hljs-string">'clip_item'</span>
+          <span class="hljs-regexp">//</span> isActive    === true 则添加className <span class="hljs-string">'clip_active'</span>
+          <span class="hljs-regexp">//</span> is_dragging === true 则添加className <span class="hljs-string">'dragging'</span>
+    </pre>
+                        <h4>
+                            <code>moment</code>
+                        </h4>
+                        <p>在项目中格式化时间的工具库，将时间格式化成你想要的任何格式！非常方便。</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="moment().format('MMMM Do YYYY, h:mm:ss a'); // 九月 10日 2018, 7:04:30 晚上
+    moment().format('dddd');                    // 星期一
+    moment().format(&quot;MMM Do YY&quot;);               // 9月 10日 18
+    moment().format('YYYY [escaped] YYYY');     // 2018 escaped 2018
+    moment().format();                          // 2018-09-10T19:04:30+08:00"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-scss">
+    <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>('MMMM Do YYYY, h:mm:ss a'); <span class="hljs-comment">// 九月 10日 2018, 7:04:30 晚上</span>
+    <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>('dddd');                    <span class="hljs-comment">// 星期一</span>
+    <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>("MMM Do YY");               <span class="hljs-comment">// 9月 10日 18</span>
+    <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>('YYYY [escaped] YYYY');     <span class="hljs-comment">// 2018 escaped 2018</span>
+    <span class="hljs-built_in">moment</span>()<span class="hljs-selector-class">.format</span>();                          <span class="hljs-comment">// 2018-09-10T19:04:30+08:00</span>
+    </pre>
+                        <p>
+                            moment.js文档地址：<a href="https://link.segmentfault.com/?enc=FcVL4wW2VzFCB2KtbcLeLQ%3D%3D.LzhMlAj7w48zlOnaYmjm6NP5%2B2Y0Esep9InAEqgueSk%3D" rel="nofollow" target="_blank"> </a>
+                            <a href="https://link.segmentfault.com/?enc=diEgb024BrXuNVBfC1H0iA%3D%3D.JgMIeR2pmQt35IEGhIEHdsZSq%2BxxCDvYNfBOO03qv8c%3D" rel="nofollow" target="_blank">http://momentjs.cn/</a>
+                        </p>
+                        <hr />
+                        <h2 id="item-4">项目后期优化</h2>
+                        <h3 id="item-4-8">antd按需加载</h3>
+                        <p>一般情况下，我们按照antd官网使用方式在css中导入整个ui的样式，<code>@import '~antd/dist/antd.css';</code>，<br />比如我们在项目中只使用了Button，和Table，但是这样实际上加载了全部的 antd 组件的样式（对前端性能是个隐患）；<br />因此我们需要使用按需加载，只加载我们使用过得组件样式。</p>
+                        <blockquote>注意：如果是运行了eject ，webpack配置了babelrc: false ,单独根目录新建.babelrc会报错的，需要在webpack.dev.js配置，在module模块 ,loader: require.resolve('babel-loader')对象中的plugins数组中添加</blockquote>
+                        <p>
+                            这里只展示允许eject暴露了webpack配置文件的配置方式，未暴露webpack配置方式请参考<a href="https://segmentfault.com/a/1190000012881473" target="_blank"> </a>
+                            <a href="https://segmentfault.com/a/1190000012881473" target="_blank">https://segmentfault.com/a/11...</a>
+                        </p>
+                        <ol>
+                            <li>
+                                安装babel-plugin-import
+                                <p>
+                                    <code>npm install --save-dev babel-plugin-import</code>
+                                </p>
+                            </li>
+                            <li>给 webpack 的 babel-loader plugins 加上 babel-plugin-import</li>
+                        </ol>
+                        <p>需要修改两个文件 /config/webpack.config.prod.js 和 /config/webpack.config.dev.js (修改的内容一样,升级后的create-react-app合并为一个文件 webpack.config.js)找到加载 babel-loader 的地方，往他的 plugins 加入如下代码</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="[
+        require.resolve('babel-plugin-import'),// 导入 import 插件
+        {
+          libraryName: 'antd',   //暴露antd
+          style: 'css'
+        }
+      ]
+    "
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-scheme">[
+        require.resolve(<span class="hljs-symbol">'babel-plugin-import</span>'),// 导入 import 插件
+        {
+          libraryName: <span class="hljs-symbol">'antd</span>',   //暴露antd
+          style: <span class="hljs-symbol">'css</span>'
+        }
+      ]
+    </pre>
+                        <p>最后形成的配置如下（create-react-app 版本不同最后的配置可能不一样，原理一样）：</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="   // Process application JS with Babel.
+        // The preset includes JSX, Flow, TypeScript, and some ESnext features.
+        {
+          test: /\.(js|mjs|jsx|ts|tsx)$/,
+          include: paths.appSrc,
+          loader: require.resolve('babel-loader'),
+          options: {
+            customize: require.resolve(
+              'babel-preset-react-app/webpack-overrides'
+            ),
+            
+            plugins: [
+              [
+                require.resolve('babel-plugin-named-asset-import'),
+                {
+                  loaderMap: {
+                    svg: {
+                      ReactComponent: '@svgr/webpack?-svgo,+ref![path]',
+                    },
+                  },
+                },
+              ],
+              // antd按需加载
+              [
+                require.resolve('babel-plugin-import'),// 导入 import 插件
+                {
+                  libraryName: 'antd',   //暴露antd
+                  style: 'css'
+                }
+              ],
+            ],
+            // This is a feature of `babel-loader` for webpack (not Babel itself).
+            // It enables caching results in ./node_modules/.cache/babel-loader/
+            // directory for faster rebuilds.
+            cacheDirectory: true,
+            cacheCompression: isEnvProduction,
+            compact: isEnvProduction,
+          },
+        },"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-awk">   <span class="hljs-regexp">//</span> Process application JS with Babel.
+        <span class="hljs-regexp">//</span> The preset includes JSX, Flow, TypeScript, and some ESnext features.
+        {
+          test: <span class="hljs-regexp">/\.(js|mjs|jsx|ts|tsx)$/</span>,
+          include: paths.appSrc,
+          loader: require.resolve(<span class="hljs-string">'babel-loader'</span>),
+          options: {
+            customize: require.resolve(
+              <span class="hljs-string">'babel-preset-react-app/webpack-overrides'</span>
+            ),
+            
+            plugins: [
+              [
+                require.resolve(<span class="hljs-string">'babel-plugin-named-asset-import'</span>),
+                {
+                  loaderMap: {
+                    svg: {
+                      ReactComponent: <span class="hljs-string">'@svgr/webpack?-svgo,+ref![path]'</span>,
+                    },
+                  },
+                },
+              ],
+              <span class="hljs-regexp">//</span> antd按需加载
+              [
+                require.resolve(<span class="hljs-string">'babel-plugin-import'</span>),<span class="hljs-regexp">//</span> 导入 import 插件
+                {
+                  libraryName: <span class="hljs-string">'antd'</span>,   <span class="hljs-regexp">//</span>暴露antd
+                  style: <span class="hljs-string">'css'</span>
+                }
+              ],
+            ],
+            <span class="hljs-regexp">//</span> This is a feature of `babel-loader` <span class="hljs-keyword">for</span> webpack (not Babel itself).
+            <span class="hljs-regexp">//</span> It enables caching results <span class="hljs-keyword">in</span> .<span class="hljs-regexp">/node_modules/</span>.cache<span class="hljs-regexp">/babel-loader/</span>
+            <span class="hljs-regexp">//</span> directory <span class="hljs-keyword">for</span> faster rebuilds.
+            cacheDirectory: true,
+            cacheCompression: isEnvProduction,
+            compact: isEnvProduction,
+          },
+        },</pre>
+                        <h3 id="item-4-9">代码分隔（react-loadable）</h3>
+                        <blockquote>一个动态导入加载组件的高阶组件.</blockquote>
+                        <p>未使用前</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button type="button" class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode" data-toggle="tooltip" data-placement="top" data-clipboard-text="import Home from'./Home';" title="" data-bs-original-title="复制" aria-label="复制"></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-clean">
+    <span class="hljs-keyword">import</span> Home <span class="hljs-keyword">from</span>
+    <span class="hljs-string">'./Home'</span>;</pre>
+                        <p>使用后</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="import loadable from '@/utils/loadable'
+    const Home = loadable(() => import('./Home '));"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-coffeescript">
+    <span class="hljs-keyword">import</span> loadable <span class="hljs-keyword">from</span>
+    <span class="hljs-string">'@/utils/loadable'</span>
+    const Home = loadable(<span class="hljs-function">
+    <span class="hljs-params">()</span> =&gt;</span>
+    <span class="hljs-keyword">import</span>(<span class="hljs-string">'./Home '</span>));</pre>
+                        <p>loadable组件</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="import React from 'react';
+    import Loadable from 'react-loadable';
+    
+    //通用的过场组件
+    const loadingComponent =()=>{
+      return (
+        <div>
+    </div>
+      )
+    };
+    
+    //过场组件默认采用通用的，若传入了loading，则采用传入的过场组件
+    export default (loader,loading = loadingComponent)=>{
+      return Loadable({
+        loader,
+        loading
+      });
+    }"
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-javascript">
+    <span class="hljs-keyword">import</span>
+    <span class="hljs-title class_">React</span>
+    <span class="hljs-keyword">from</span>
+    <span class="hljs-string">'react'</span>;
+    <span class="hljs-keyword">import</span>
+    <span class="hljs-title class_">Loadable</span>
+    <span class="hljs-keyword">from</span>
+    <span class="hljs-string">'react-loadable'</span>;
+    
+    <span class="hljs-comment">//通用的过场组件</span>
+    <span class="hljs-keyword">const</span>
+    <span class="hljs-title function_">loadingComponent</span> =(<span class="hljs-params">
+    </span>)=&gt;{
+      <span class="hljs-keyword">return</span> (
+        <span class="language-xml">
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    </span>
+      )
+    };
+    
+    <span class="hljs-comment">//过场组件默认采用通用的，若传入了loading，则采用传入的过场组件</span>
+    <span class="hljs-keyword">export</span>
+    <span class="hljs-keyword">default</span> (loader,loading = loadingComponent)=&gt;{
+      <span class="hljs-keyword">return</span>
+    <span class="hljs-title class_">Loadable</span>({
+        loader,
+        loading
+      });
+    }</pre>
+                        <p>
+                            <a href="https://link.segmentfault.com/?enc=MlGn5GvMj9a1hRSRgem1aw%3D%3D.B72s2y1xx01Ek8KZU%2BgLsQiQfo%2FItyTRNRJm1ayVOn5SGAV2hBJnzLTS1T5QXnFu" rel="nofollow" target="_blank">参考链接</a>
+                        </p>
+                        <h3 id="item-4-10">预渲染配置 (Prerender SPA Plugin)</h3>
+                        <blockquote>构建阶段生成匹配预渲染路径的 html 文件（注意：每个需要预渲染的路由都有一个对应的 html）。构建出来的 html 文件已有部分内容。</blockquote>
+                        <p>如果在项目中同时使用<code>代码分隔</code>和<code>预加载</code>会导致页面闪屏。原因是会先加载预加载打包出来的html，渲染静态页面，然后会请求代码分隔后该页面的js。会导致html的root节点再次挂载。因此不推荐使用预加载的同时使用代码分隔。</p>
+                        <p>配置方式</p>
+                        <p>1.<code>npm install prerender-spa-plugin</code></p>
+                        <p>2.找到 <code>/config/webpack.config.prod.js</code>文件</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="const path = require('path')
+    const PrerenderSPAPlugin = require('prerender-spa-plugin')
+    
+    module.exports = {
+      plugins: [
+        ...
+        new PrerenderSPAPlugin({
+          // Required - The path to the webpack-outputted app to prerender.
+          staticDir: path.join(__dirname, '../build'),
+          // Required - Routes to render.
+          routes: ['/home', '/convert', '/trim', '/merge', '/watermark', '/remove', '/download'],
+        })
+      ]
+    }
+    "
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-javascript">
+                            <span class="hljs-keyword">const</span>
+                            path = 
+                            <span class="hljs-built_in">require</span>
+                            (
+                            <span class="hljs-string">'path'</span>)
+                            <span class="hljs-keyword">const</span>
+                            <span class="hljs-title class_">PrerenderSPAPlugin</span> 
+                            = 
+                            <span class="hljs-built_in">require</span>
+                            (
+                            <span class="hljs-string">'prerender-spa-plugin'</span>
+                            )
+                            <span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span> = {
+                            <span class="hljs-attr">plugins</span>: [
+                                ...
+                                <span class="hljs-keyword">new</span>
+                            <span class="hljs-title class_">PrerenderSPAPlugin</span>({
+                                <span class="hljs-comment">// Required - The path to the webpack-outputted app to prerender.</span>
+                                <span class="hljs-attr">staticDir</span>: path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">'../build'</span>),
+                                <span class="hljs-comment">// Required - Routes to render.</span>
+                                <span class="hljs-attr">routes</span>: [<span class="hljs-string">'/home'</span>, <span class="hljs-string">'/convert'</span>, <span class="hljs-string">'/trim'</span>, <span class="hljs-string">'/merge'</span>, <span class="hljs-string">'/watermark'</span>, <span class="hljs-string">'/remove'</span>, <span class="hljs-string">'/download'</span>],
+                                })
+                            ]
+                            }
+                        </pre>
+                        <p>3.如需添加路由则在 routes 里面添加，同时需要后端更改ngnix配置</p>
+                        <div class="widget-codetool" style="display: none">
+                            <div class="widget-codetool--inner">
+                                <button
+                                    type="button"
+                                    class="btn btn-dark far fa-copy rounded-0 sflex-center copyCode"
+                                    data-toggle="tooltip"
+                                    data-placement="top"
+                                    data-clipboard-text="/ -> home/index.html
+    /home -> home/index.html
+    /convert -> convert/index.html
+    /trim -> trim/index.html
+    /merge -> merge/index.html
+    /watermark -> watermark/index.html
+    /remove -> remove/index.html
+    /download -> download/index.html
+    
+    除了上面的路径，其他路径全部指向 index.html
+    "
+                                    title=""
+                                    data-bs-original-title="复制"
+                                    aria-label="复制"
+                                ></button>
+                            </div>
+                        </div>
+                        <pre class="hljs language-awk">
+                            <span class="hljs-regexp">/ -&gt; home/i</span>ndex.html
+                            <span class="hljs-regexp">/home -&gt; home/i</span>ndex.html
+                            <span class="hljs-regexp">/convert -&gt; convert/i</span>ndex.html
+                            <span class="hljs-regexp">/trim -&gt; trim/i</span>ndex.html
+                            <span class="hljs-regexp">/merge -&gt; merge/i</span>ndex.html
+                            <span class="hljs-regexp">/watermark -&gt; watermark/i</span>ndex.html
+                            <span class="hljs-regexp">/remove -&gt; remove/i</span>ndex.html
+                            <span class="hljs-regexp">/download -&gt; download/i</span>ndex.html
+    
+                            除了上面的路径，其他路径全部指向 index.html
+                        </pre>
+                        <p>
+                            单页应用多路由预渲染指南
+                            <a href="https://link.segmentfault.com/?enc=wnA9Su1KCiuGpfHj4BC4UQ%3D%3D.UDvU6%2FAIb%2FwpalkrAX5bIkY%2FVAEPQNSy5htjbo54CpGbsyFwPx6PsNFt2YYiwvX6" rel="nofollow" target="_blank">https://juejin.im/post/59d49d976fb9a00a571d651d</a>
+                            <br />使用说明
+                            <a href="https://link.segmentfault.com/?enc=2aw%2BOgXStsjalCMVpO%2FKGg%3D%3D.8tGIMTl90yiLyd6g2sAsiA2YclHIjpDSG1VSeIZnEFeMgmIHpT5cFBzJFHEO3hkmvMqiZSlpZOQwmsVhhQc9qA%3D%3D" rel="nofollow" target="_blank">https://github.com/chrisvfritz/prerender-spa-plugin</a>
+                        </p>
+                        <hr />
+                        <h2 id="item-5">源码</h2>
+                        <p>
+                            为方便快速构建项目，本例所有配置的代码均放在github项目中。<br />
+                            <a href="https://link.segmentfault.com/?enc=48XrGh3BF4KeV47wmKmczQ%3D%3D.3ZZre9c62G224sVFirIRZxxsdjRdzV8DKGEsHNYKZDqrEDzksF3aO9pmKPTGflN%2F" rel="nofollow" target="_blank"> </a>
+                            <a href="https://link.segmentfault.com/?enc=2VHxlntQpGw8McwFoSPosw%3D%3D.hLVJMxy7Ixs6Az7RXzMiVXxajROimJgR2hr3bOdrutfP1gei%2BPiS%2B%2FPe25CvjiiA" rel="nofollow" target="_blank">https://github.com/zhaosheng8...</a>
+                        </p>
+                    </article>
+                    <div class="d-flex flex-wrap align-items-center">
+                        <div class="m-n1 d-flex flex-wrap align-items-center">
+                            <a href="/t/redux" class="m-1 badge-tag">redux</a>
+                            <a href="/t/react-router4" class="m-1 badge-tag">react-router4</a>
+                            <a href="/t/react.js" class="m-1 badge-tag">react.js</a>
+                            <a href="/t/javascript" class="m-1 badge-tag">javascript</a>
+                        </div>
+                    </div>
+                    <div class="my-4">
+                        <div id="OA_holder_3" class="ad-container" style="display: block">
+                            <div id="beacon_7c99c8dd40" style="position: absolute; left: 0px; top: 0px; visibility: hidden">
+                                <img src="https://sponsor.segmentfault.com/lg.php?bannerid=0&amp;campaignid=0&amp;zoneid=3&amp;loc=https%3A%2F%2Fsegmentfault.com%2Fa%2F1190000016342792&amp;referer=https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3D9BZjHN-UWToD8rVk2SMW7O9R-mfpE0WoHdFyp-Nb5QPjL-1QIDDmzrtQxsUiFC3UKjRds3roldm1_X7soVb3eK%26wd%3D%26eqid%3D8b2aa3d80012867700000004629ba2b1&amp;cb=7c99c8dd40" width="0" height="0" alt="" style="width: 0px; height: 0px" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
